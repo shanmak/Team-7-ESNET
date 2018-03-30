@@ -1,0 +1,519 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SA46Team07BModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Availability">
+          <Key>
+            <PropertyRef Name="FacilityID" />
+            <PropertyRef Name="DateOfBooking" />
+          </Key>
+          <Property Name="FacilityID" Type="int" Nullable="false" />
+          <Property Name="DateOfBooking" Type="datetime" Nullable="false" />
+          <Property Name="Slot1" Type="bit" Nullable="false" />
+          <Property Name="Slot2" Type="bit" Nullable="false" />
+          <Property Name="Slot3" Type="bit" Nullable="false" />
+          <Property Name="Slot4" Type="bit" Nullable="false" />
+          <Property Name="Slot5" Type="bit" Nullable="false" />
+          <Property Name="Slot6" Type="bit" Nullable="false" />
+          <Property Name="Slot7" Type="bit" Nullable="false" />
+          <Property Name="Slot8" Type="bit" Nullable="false" />
+          <Property Name="Slot9" Type="bit" Nullable="false" />
+          <Property Name="Slot10" Type="bit" Nullable="false" />
+          <Property Name="Slot11" Type="bit" Nullable="false" />
+          <Property Name="Slot12" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bookings">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FacilityID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="DateOfBooking" Type="datetime" Nullable="false" />
+          <Property Name="Slot" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Facilities">
+          <Key>
+            <PropertyRef Name="FacilityID" />
+          </Key>
+          <Property Name="FacilityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FacilityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost" Type="money" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="1" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="8" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Slots">
+          <Key>
+            <PropertyRef Name="SlotNum" />
+          </Key>
+          <Property Name="SlotNum" Type="int" Nullable="false" />
+          <Property Name="SlotName" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="SlotTime" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SA46Team07B.dbo.BookingView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BookingView">
+          <Key>
+            <PropertyRef Name="BookingID" />
+            <PropertyRef Name="DateOfBooking" />
+            <PropertyRef Name="FacilityName" />
+            <PropertyRef Name="Cost" />
+            <PropertyRef Name="SlotTime" />
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="MemberName" />
+          </Key>
+          <Property Name="BookingID" Type="int" Nullable="false" />
+          <Property Name="DateOfBooking" Type="datetime" Nullable="false" />
+          <Property Name="FacilityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="10" />
+          <Property Name="Cost" Type="money" Nullable="false" />
+          <Property Name="SlotTime" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SA46Team07B.dbo.Occupancy' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Occupancy">
+          <Key>
+            <PropertyRef Name="FacilityID" />
+            <PropertyRef Name="FacilityName" />
+            <PropertyRef Name="DateOfBooking" />
+          </Key>
+          <Property Name="FacilityID" Type="int" Nullable="false" />
+          <Property Name="FacilityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateOfBooking" Type="datetime" Nullable="false" />
+          <Property Name="DayNum" Type="int" />
+          <Property Name="Day Of Week" Type="nvarchar" MaxLength="30" />
+          <Property Name="Occupancy" Type="float" />
+        </EntityType>
+        <Association Name="FK_FacilityID">
+          <End Role="Facilities" Type="Self.Facilities" Multiplicity="1" />
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facilities">
+              <PropertyRef Name="FacilityID" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="FacilityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FacilityID_1">
+          <End Role="Facilities" Type="Self.Facilities" Multiplicity="1" />
+          <End Role="Availability" Type="Self.Availability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facilities">
+              <PropertyRef Name="FacilityID" />
+            </Principal>
+            <Dependent Role="Availability">
+              <PropertyRef Name="FacilityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberID">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Slots">
+          <End Role="Slots" Type="Self.Slots" Multiplicity="1" />
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Slots">
+              <PropertyRef Name="SlotNum" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="Slot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SA46Team07BModelStoreContainer">
+          <EntitySet Name="Availability" EntityType="Self.Availability" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Facilities" EntityType="Self.Facilities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Slots" EntityType="Self.Slots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookingView" EntityType="Self.BookingView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BookingView].[BookingID] AS [BookingID], 
+    [BookingView].[DateOfBooking] AS [DateOfBooking], 
+    [BookingView].[FacilityName] AS [FacilityName], 
+    [BookingView].[Location] AS [Location], 
+    [BookingView].[Cost] AS [Cost], 
+    [BookingView].[SlotTime] AS [SlotTime], 
+    [BookingView].[MemberID] AS [MemberID], 
+    [BookingView].[MemberName] AS [MemberName], 
+    [BookingView].[Address] AS [Address], 
+    [BookingView].[PhoneNumber] AS [PhoneNumber]
+    FROM [dbo].[BookingView] AS [BookingView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Occupancy" EntityType="Self.Occupancy" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Occupancy].[FacilityID] AS [FacilityID], 
+    [Occupancy].[FacilityName] AS [FacilityName], 
+    [Occupancy].[DateOfBooking] AS [DateOfBooking], 
+    [Occupancy].[DayNum] AS [DayNum], 
+    [Occupancy].[Day Of Week] AS [Day Of Week], 
+    [Occupancy].[Occupancy] AS [Occupancy]
+    FROM [dbo].[Occupancy] AS [Occupancy]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_FacilityID" Association="Self.FK_FacilityID">
+            <End Role="Facilities" EntitySet="Facilities" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FacilityID_1" Association="Self.FK_FacilityID_1">
+            <End Role="Facilities" EntitySet="Facilities" />
+            <End Role="Availability" EntitySet="Availability" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberID" Association="Self.FK_MemberID">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Slots" Association="Self.FK_Slots">
+            <End Role="Slots" EntitySet="Slots" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SA46Team07BModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Availability">
+          <Key>
+            <PropertyRef Name="FacilityID" />
+            <PropertyRef Name="DateOfBooking" />
+          </Key>
+          <Property Name="FacilityID" Type="Int32" Nullable="false" />
+          <Property Name="DateOfBooking" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Slot1" Type="Boolean" Nullable="false" />
+          <Property Name="Slot2" Type="Boolean" Nullable="false" />
+          <Property Name="Slot3" Type="Boolean" Nullable="false" />
+          <Property Name="Slot4" Type="Boolean" Nullable="false" />
+          <Property Name="Slot5" Type="Boolean" Nullable="false" />
+          <Property Name="Slot6" Type="Boolean" Nullable="false" />
+          <Property Name="Slot7" Type="Boolean" Nullable="false" />
+          <Property Name="Slot8" Type="Boolean" Nullable="false" />
+          <Property Name="Slot9" Type="Boolean" Nullable="false" />
+          <Property Name="Slot10" Type="Boolean" Nullable="false" />
+          <Property Name="Slot11" Type="Boolean" Nullable="false" />
+          <Property Name="Slot12" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Facility" Relationship="Self.FK_FacilityID_1" FromRole="Availability" ToRole="Facilities" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacilityID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="DateOfBooking" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Slot" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Facility" Relationship="Self.FK_FacilityID" FromRole="Bookings" ToRole="Facilities" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_MemberID" FromRole="Bookings" ToRole="Members" />
+          <NavigationProperty Name="Slot1" Relationship="SA46Team07BModel.FK_Slots" FromRole="Booking" ToRole="Slot" />
+        </EntityType>
+        <EntityType Name="Facility">
+          <Key>
+            <PropertyRef Name="FacilityID" />
+          </Key>
+          <Property Name="FacilityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacilityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Availabilities" Relationship="Self.FK_FacilityID_1" FromRole="Facilities" ToRole="Availability" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK_FacilityID" FromRole="Facilities" ToRole="Bookings" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK_MemberID" FromRole="Members" ToRole="Bookings" />
+        </EntityType>
+        <Association Name="FK_FacilityID_1">
+          <End Role="Facilities" Type="Self.Facility" Multiplicity="1" />
+          <End Role="Availability" Type="Self.Availability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facilities">
+              <PropertyRef Name="FacilityID" />
+            </Principal>
+            <Dependent Role="Availability">
+              <PropertyRef Name="FacilityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FacilityID">
+          <End Role="Facilities" Type="Self.Facility" Multiplicity="1" />
+          <End Role="Bookings" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facilities">
+              <PropertyRef Name="FacilityID" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="FacilityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberID">
+          <End Role="Members" Type="Self.Member" Multiplicity="1" />
+          <End Role="Bookings" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SA46Team07BEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Availabilities" EntityType="Self.Availability" />
+          <EntitySet Name="Bookings" EntityType="Self.Booking" />
+          <EntitySet Name="Facilities" EntityType="Self.Facility" />
+          <EntitySet Name="Logins" EntityType="Self.Login" />
+          <EntitySet Name="Members" EntityType="Self.Member" />
+          <AssociationSet Name="FK_FacilityID_1" Association="Self.FK_FacilityID_1">
+            <End Role="Facilities" EntitySet="Facilities" />
+            <End Role="Availability" EntitySet="Availabilities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FacilityID" Association="Self.FK_FacilityID">
+            <End Role="Facilities" EntitySet="Facilities" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberID" Association="Self.FK_MemberID">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <EntitySet Name="Slots" EntityType="SA46Team07BModel.Slot" />
+          <AssociationSet Name="FK_Slots" Association="SA46Team07BModel.FK_Slots">
+            <End Role="Slot" EntitySet="Slots" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <EntitySet Name="BookingViews" EntityType="SA46Team07BModel.BookingView" />
+          <EntitySet Name="Occupancies" EntityType="SA46Team07BModel.Occupancy" />
+        </EntityContainer>
+        <EntityType Name="Slot">
+          <Key>
+            <PropertyRef Name="SlotNum" />
+          </Key>
+          <Property Name="SlotNum" Type="Int32" Nullable="false" />
+          <Property Name="SlotName" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SlotTime" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bookings" Relationship="SA46Team07BModel.FK_Slots" FromRole="Slot" ToRole="Booking" />
+        </EntityType>
+        <Association Name="FK_Slots">
+          <End Type="SA46Team07BModel.Slot" Role="Slot" Multiplicity="1" />
+          <End Type="SA46Team07BModel.Booking" Role="Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Slot">
+              <PropertyRef Name="SlotNum" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Slot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BookingView">
+          <Key>
+            <PropertyRef Name="BookingID" />
+            <PropertyRef Name="DateOfBooking" />
+            <PropertyRef Name="FacilityName" />
+            <PropertyRef Name="Cost" />
+            <PropertyRef Name="SlotTime" />
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="MemberName" />
+          </Key>
+          <Property Name="BookingID" Type="Int32" Nullable="false" />
+          <Property Name="DateOfBooking" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FacilityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="SlotTime" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="MemberName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Occupancy">
+          <Key>
+            <PropertyRef Name="FacilityID" />
+            <PropertyRef Name="FacilityName" />
+            <PropertyRef Name="DateOfBooking" />
+          </Key>
+          <Property Name="FacilityID" Type="Int32" Nullable="false" />
+          <Property Name="FacilityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DayNum" Type="Int32" Nullable="false" />
+          <Property Name="Day_Of_Week" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Occupancy1" Type="Double" Nullable="false" />
+          <Property Name="DateOfBooking" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SA46Team07BModelStoreContainer" CdmEntityContainer="SA46Team07BEntities">
+          <EntitySetMapping Name="Availabilities">
+            <EntityTypeMapping TypeName="SA46Team07BModel.Availability">
+              <MappingFragment StoreEntitySet="Availability">
+                <ScalarProperty Name="FacilityID" ColumnName="FacilityID" />
+                <ScalarProperty Name="DateOfBooking" ColumnName="DateOfBooking" />
+                <ScalarProperty Name="Slot1" ColumnName="Slot1" />
+                <ScalarProperty Name="Slot2" ColumnName="Slot2" />
+                <ScalarProperty Name="Slot3" ColumnName="Slot3" />
+                <ScalarProperty Name="Slot4" ColumnName="Slot4" />
+                <ScalarProperty Name="Slot5" ColumnName="Slot5" />
+                <ScalarProperty Name="Slot6" ColumnName="Slot6" />
+                <ScalarProperty Name="Slot7" ColumnName="Slot7" />
+                <ScalarProperty Name="Slot8" ColumnName="Slot8" />
+                <ScalarProperty Name="Slot9" ColumnName="Slot9" />
+                <ScalarProperty Name="Slot10" ColumnName="Slot10" />
+                <ScalarProperty Name="Slot11" ColumnName="Slot11" />
+                <ScalarProperty Name="Slot12" ColumnName="Slot12" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="SA46Team07BModel.Booking">
+              <MappingFragment StoreEntitySet="Bookings">
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="FacilityID" ColumnName="FacilityID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="DateOfBooking" ColumnName="DateOfBooking" />
+                <ScalarProperty Name="Slot" ColumnName="Slot" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facilities">
+            <EntityTypeMapping TypeName="SA46Team07BModel.Facility">
+              <MappingFragment StoreEntitySet="Facilities">
+                <ScalarProperty Name="FacilityID" ColumnName="FacilityID" />
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="SA46Team07BModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="SA46Team07BModel.Member">
+              <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Slots">
+            <EntityTypeMapping TypeName="SA46Team07BModel.Slot">
+              <MappingFragment StoreEntitySet="Slots">
+                <ScalarProperty Name="SlotTime" ColumnName="SlotTime" />
+                <ScalarProperty Name="SlotName" ColumnName="SlotName" />
+                <ScalarProperty Name="SlotNum" ColumnName="SlotNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookingViews">
+            <EntityTypeMapping TypeName="SA46Team07BModel.BookingView">
+              <MappingFragment StoreEntitySet="BookingView">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="SlotTime" ColumnName="SlotTime" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+                <ScalarProperty Name="DateOfBooking" ColumnName="DateOfBooking" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Occupancies">
+            <EntityTypeMapping TypeName="SA46Team07BModel.Occupancy">
+              <MappingFragment StoreEntitySet="Occupancy">
+                <ScalarProperty Name="DateOfBooking" ColumnName="DateOfBooking" />
+                <ScalarProperty Name="Occupancy1" ColumnName="Occupancy" />
+                <ScalarProperty Name="Day_Of_Week" ColumnName="Day Of Week" />
+                <ScalarProperty Name="DayNum" ColumnName="DayNum" />
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+                <ScalarProperty Name="FacilityID" ColumnName="FacilityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

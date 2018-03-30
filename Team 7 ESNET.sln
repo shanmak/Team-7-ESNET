@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Team 7 ESNET", "Team 7 ESNET\Team 7 ESNET.csproj", "{5F5938DC-E188-416A-ABBB-43EA6E5DE816}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Team7B ESNET", "Team 7 ESNET\Team7B ESNET.csproj", "{5F5938DC-E188-416A-ABBB-43EA6E5DE816}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
